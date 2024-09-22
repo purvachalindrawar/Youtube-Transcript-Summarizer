@@ -44,3 +44,10 @@ This project is a universal video downloader and audio extractor that fetches vi
 5. Enter the video URL in the provided input box and click "Extract Audio and Get Transcript".
 6. The video thumbnail will be displayed, and the audio will be extracted. The transcript of the audio will also be displayed on the screen.
 
+
+
+# What's Next
+- Summarization of the transcript into multiple language
+- the pop up message displayed if particular video has no transcript provided
+- customizable summary - user can enter the number of words he wants
+- 
