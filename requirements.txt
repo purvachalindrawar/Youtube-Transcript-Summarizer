@@ -1,0 +1,8 @@
+streamlit
+yt-dlp
+requests
+Pillow
+speech_recognition
+pydub
+torch
+whisper
