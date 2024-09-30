@@ -1,12 +1,12 @@
 import os
 import re
-import subprocess
 import streamlit as st
 import yt_dlp
 import requests
 from PIL import Image
 import whisper
 from io import BytesIO
+import time
 
 # Function to sanitize filenames by removing invalid characters
 def sanitize_filename(filename):
@@ -45,11 +45,16 @@ def extract_audio(video_url):
 
     return audio_file_path
 
-# Function to convert audio to text using Whisper
+# Function to convert audio to text using Whisper with automatic language detection
 def audio_to_text(audio_file_path):
-    model = whisper.load_model("base")
-    result = model.transcribe(audio_file_path)
-    return result['text']
+    model = whisper.load_model("base")  # Adjust model for speed/accuracy tradeoff
+    result = model.transcribe(audio_file_path)  # Whisper automatically detects language
+    
+    # Retrieve detected language and transcript
+    detected_language = result.get('language', 'unknown')  # Use 'unknown' if no language is detected
+    transcript = result['text']
+    
+    return detected_language, transcript
 
 # Streamlit application interface
 def main():
@@ -80,9 +85,10 @@ def main():
                     st.audio(audio_file_path)  # Display audio player
 
                 with st.spinner("Generating transcript..."):
-                    # Convert audio to text and display
-                    transcript = audio_to_text(audio_file_path)
-                    st.success("Transcript extracted successfully!")
+                    # Convert audio to text and display transcript with detected language
+                    detected_language, transcript = audio_to_text(audio_file_path)
+                    
+                    st.success(f"Transcript extracted successfully in {detected_language}!")
                     st.write(transcript)
 
             except Exception as e:
