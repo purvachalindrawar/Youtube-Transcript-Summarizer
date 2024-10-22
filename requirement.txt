@@ -1,0 +1,7 @@
+streamlit
+yt-dlp
+requests
+pillow
+whisper
+torch
+youtube-transcript-api
